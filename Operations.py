@@ -54,17 +54,33 @@ class Operations:
     def printData(self):
         try:
             self.mycursor.execute("SELECT * FROM student")
-            myresult = self.mycursor.fetchone()
+            myresult = self.mycursor.fetchall()
             Log.logging.info(myresult)
         except Exception as e:
             Log.logging.error(e)
 
     def deleteData(self):
         try:
-            sql = "DELETE FROM student WHERE roll_no = 1"
+            sql = "DELETE FROM student WHERE roll_no = 2"
             self.mycursor.execute(sql)
             self.mydb.commit()
             Log.logging.info("Data deleted successfully")
+        except Exception as e:
+            Log.logging.error(e)
+
+    def insertMultipleData(self):
+        try:
+            sql = "INSERT INTO student (roll_no, student_name, score) VALUES (%s, %s, %s)"
+
+            val = [
+                (2,'Peter', 50),
+                (3,'Amy', 60),
+                (4,'Hannah', 76),
+                (5,'Michael', 87)
+                ]
+            self.mycursor.executemany(sql, val)
+            self.mydb.commit()
+            Log.logging.info("multiple record inserted successfully")
         except Exception as e:
             Log.logging.error(e)
 
@@ -76,5 +92,7 @@ if __name__=="__main__":
     operation.updateData()
     operation.printData()
     operation.deleteData()
+    operation.insertMultipleData()
+    operation.printData()
 
     operation.mydb.close()
