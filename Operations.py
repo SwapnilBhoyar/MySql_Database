@@ -42,7 +42,19 @@ class Operations:
         except Exception as e:
             Log.logging.error(e)
 
+    def updateData(self):
+        try:
+            sql = "UPDATE student SET student_name = 'aditya' WHERE roll_no = 1"
+            self.mycursor.execute(sql)
+            self.mydb.commit
+            Log.logging.info(self.mycursor.rowcount, "record(s) affected")
+            Log.logging.info("Data updated successfully")
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     operation = Operations()
     operation.insertData()
+    operation.printData()
+    operation.updateData()
     operation.mydb.close()
