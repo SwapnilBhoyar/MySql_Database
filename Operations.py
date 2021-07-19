@@ -6,6 +6,7 @@
 @Title : this program contains crud operations.
 """
 
+from re import L
 import mysql.connector
 from os import environ as env   
 from dotenv import load_dotenv
@@ -47,14 +48,34 @@ class Operations:
             sql = "UPDATE student SET student_name = 'aditya' WHERE roll_no = 1"
             self.mycursor.execute(sql)
             self.mydb.commit
-            Log.logging.info(self.mycursor.rowcount, "record(s) affected")
             Log.logging.info("Data updated successfully")
+        except Exception as e:
+            Log.logging.error(e)
+
+    def printData(self):
+        try:
+            self.mycursor.execute("SELECT * FROM student")
+            myresult = self.mycursor.fetchone()
+            Log.logging.info(myresult)
+        except Exception as e:
+            Log.logging.error(e)
+
+    def deleteData(self):
+        try:
+            sql = "DELETE FROM student WHERE roll_no = 1"
+            self.mycursor.execute(sql)
+            self.mydb.commit()
+            Log.logging.info("Data deleted successfully")
         except Exception as e:
             Log.logging.error(e)
 
 if __name__=="__main__":
     operation = Operations()
+
     operation.insertData()
     operation.printData()
     operation.updateData()
+    operation.printData()
+    operation.deleteData()
+
     operation.mydb.close()
