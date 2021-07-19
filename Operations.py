@@ -23,8 +23,18 @@ class Operations:
             database =env['DB_DATABASE'])
             self.mycursor = self.mydb.cursor()  
         except Exception as e:
-            Log.logging.info(e)
- 
+            Log.logging.error(e)
+
+    def insertData(self):
+        try:
+            sql = "INSERT INTO student (roll_no, student_name, score) VALUES (1, 'swapnil', 75)"
+            self.mycursor.execute(sql)
+            self.mydb.commit()
+            Log.logging.info("Data insered successfully")
+        except Exception as e:
+            Log.logging.error(e)
+            
 if __name__=="__main__":
     operation = Operations()
+    operation.insertData()
     operation.mydb.close()
