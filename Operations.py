@@ -33,7 +33,15 @@ class Operations:
             Log.logging.info("Data insered successfully")
         except Exception as e:
             Log.logging.error(e)
-            
+
+    def printData(self):
+        try:
+            self.mycursor.execute("SELECT * FROM student")
+            myresult = self.mycursor.fetchone()
+            Log.logging.info(myresult)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     operation = Operations()
     operation.insertData()
