@@ -6,7 +6,6 @@
 @Title : this program contains crud operations.
 """
 
-from re import L
 import mysql.connector
 from os import environ as env   
 from dotenv import load_dotenv
