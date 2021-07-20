@@ -96,6 +96,17 @@ class Operations:
         except Exception as e:
             Log.logging.error(e)
 
+    def limitData(self):
+        try:
+            sql = "SELECT * FROM student LIMIT 2"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
+
 if __name__=="__main__":
     operation = Operations()
 
@@ -107,5 +118,6 @@ if __name__=="__main__":
     operation.insertMultipleData()
     operation.printData()
     operation.sortData()
+    operation.limitData()
 
     operation.mydb.close()
