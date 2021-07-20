@@ -55,6 +55,8 @@ class Operations:
         try:
             self.mycursor.execute("SELECT * FROM student")
             myresult = self.mycursor.fetchall()
+            # for x in myresult:
+            #     Log.logging.info(x)
             Log.logging.info(myresult)
         except Exception as e:
             Log.logging.error(e)
@@ -84,6 +86,16 @@ class Operations:
         except Exception as e:
             Log.logging.error(e)
 
+    def sortData(self):
+        try:
+            sql = "SELECT * FROM student ORDER BY student_name"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     operation = Operations()
 
@@ -94,5 +106,6 @@ if __name__=="__main__":
     operation.deleteData()
     operation.insertMultipleData()
     operation.printData()
+    operation.sortData()
 
     operation.mydb.close()
