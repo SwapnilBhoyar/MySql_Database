@@ -68,9 +68,20 @@ class Joins:
         except Exception as e:
             Log.logging.error(e)
 
+    def leftJoin(self):
+        try:
+            sql = "SELECT student_info.exam_no,student_info.date_of_birth,student.student_name FROM student_info LEFT JOIN student ON student_info.roll_no=student.roll_no;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     join = Joins()
     # join.createTable()
     # join.insertMultipleData()
     # join.printData()
-    join.innerJoin()
+    # join.innerJoin()
+    join.leftJoin()
