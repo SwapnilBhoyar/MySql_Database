@@ -41,7 +41,20 @@ class Indexes:
         except Exception as e:
             Log.logging.error(e)
 
+    def deleteIndex(self):
+        """
+        Describe:
+            function to delete index
+        """
+        try:
+            sql = "ALTER TABLE student_info DROP INDEX student_index;"
+            self.mycursor.execute(sql)
+            Log.logging.info("Index deleted")
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     index = Indexes()
 
     index.createIndex()
+    index.deleteIndex()
