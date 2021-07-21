@@ -27,7 +27,7 @@ class Joins:
 
     def printData(self):
         try:
-            sql = "SELECT * FROM student_info"
+            sql = "SELECT * FROM subject_info"
             self.mycursor.execute(sql)
             myresult = self.mycursor.fetchall()
             for x in myresult:
@@ -51,6 +51,29 @@ class Joins:
                 (3, 124, '1997-02-02'),
                 (4, 125, '1997-03-03'),
                 (5, 126, '1997-04-04')
+                ]
+            self.mycursor.executemany(sql, val)
+            self.mydb.commit()
+            Log.logging.info("multiple record inserted successfully")
+        except Exception as e:
+            Log.logging.error(e)
+
+    def createSubjectTable(self):
+        try:
+            sql = "CREATE TABLE subject_info (subject_no INT, subject_name VARCHAR(30))"
+            self.mycursor.execute(sql)
+        except Exception as e:
+            Log.logging.error(e)
+
+    def insertMultipleSubjectData(self):
+        try:
+            sql = "INSERT INTO subject_info (subject_no, subject_name) VALUES (%s, %s)"
+
+            val = [
+                (1230, 'Maths'),
+                (1240, 'Chemistry'),
+                (1250, 'Physics'),
+                (1260, 'Biology')
                 ]
             self.mycursor.executemany(sql, val)
             self.mydb.commit()
@@ -89,7 +112,18 @@ class Joins:
         except Exception as e:
             Log.logging.error(e)
 
+    def crossJoin(self):
+        try:
+            sql = "SELECT * FROM student_info CROSS JOIN subject_info;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
 
+
+    
 if __name__=="__main__":
     join = Joins()
     # join.createTable()
@@ -97,4 +131,8 @@ if __name__=="__main__":
     # join.printData()
     # join.innerJoin()
     # join.leftJoin()
-    join.rightJoin()
+    # join.rightJoin()
+    # join.createSubjectTable()
+    # join.insertMultipleSubjectData()
+    # join.printData()
+    join.crossJoin()
