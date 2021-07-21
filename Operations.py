@@ -11,7 +11,7 @@ from os import environ as env
 from dotenv import load_dotenv
 import Log
 
-load_dotenv('/home/neo/Programs/MySql_Database/data.env')
+load_dotenv('/home/neo/Programs/MySql_Database/.env')
 
 class Operations:
     def __init__(self):
@@ -27,7 +27,7 @@ class Operations:
 
     def insertData(self):
         try:
-            sql = "INSERT INTO student (roll_no, student_name, score) VALUES (1, 'swapnil', 75)"
+            sql = "INSERT INTO student (roll_no, student_name, score) VALUES (1, 'swapnil', 76)"
             self.mycursor.execute(sql)
             self.mydb.commit()
             Log.logging.info("Data insered successfully")
@@ -96,9 +96,30 @@ class Operations:
         except Exception as e:
             Log.logging.error(e)
 
+    def groupBy(self):
+        try:
+            sql = "SELECT score FROM student GROUP BY score"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
     def limitData(self):
         try:
             sql = "SELECT * FROM student LIMIT 2"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
+    
+    def distinctData(self):
+        try:
+            sql = "SELECT DISTINCT student_name FROM student"
             self.mycursor.execute(sql)
             myresult = self.mycursor.fetchall()
             for x in myresult:
@@ -110,14 +131,17 @@ class Operations:
 if __name__=="__main__":
     operation = Operations()
 
-    operation.insertData()
-    operation.printData()
-    operation.updateData()
-    operation.printData()
-    operation.deleteData()
-    operation.insertMultipleData()
-    operation.printData()
-    operation.sortData()
-    operation.limitData()
+    # operation.insertData()
+    # operation.printData()
+    # operation.updateData()
+    # operation.printData()
+    # operation.deleteData()
+    # operation.insertMultipleData()
+    # operation.printData()
+    # operation.sortData()
+    # operation.limitData()
+    # operation.groupBy()
+    # operation.printData()
+    operation.distinctData()
 
     operation.mydb.close()
