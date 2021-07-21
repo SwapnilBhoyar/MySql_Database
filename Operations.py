@@ -157,6 +157,27 @@ class Operations:
         except Exception as e:
             Log.logging.error(e)
 
+    def likeData(self):
+        try:
+            sql = "SELECT * FROM student WHERE student_name LIKE 'A%'"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+
+            sql = "SELECT * FROM student WHERE student_name LIKE '%h'"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+
+            sql = "SELECT * FROM student WHERE student_name LIKE '_i%'"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
 
 if __name__=="__main__":
     operation = Operations()
@@ -173,6 +194,6 @@ if __name__=="__main__":
     # operation.groupBy()
     # operation.printData()
     # operation.distinctData()
-    operation.aggregate_functions()
-
+    # operation.aggregate_functions()
+    operation.likeData()
     operation.mydb.close()
