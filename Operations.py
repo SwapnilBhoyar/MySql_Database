@@ -27,7 +27,7 @@ class Operations:
 
     def insertData(self):
         try:
-            sql = "INSERT INTO student (roll_no, student_name, score) VALUES (1, 'swapnil', 75)"
+            sql = "INSERT INTO student (roll_no, student_name, score) VALUES (2, 'Peter', 50)"
             self.mycursor.execute(sql)
             self.mydb.commit()
             Log.logging.info("Data insered successfully")
@@ -112,12 +112,12 @@ if __name__=="__main__":
 
     operation.insertData()
     operation.printData()
-    operation.updateData()
-    operation.printData()
-    operation.deleteData()
-    operation.insertMultipleData()
-    operation.printData()
-    operation.sortData()
-    operation.limitData()
+    # operation.updateData()
+    # operation.printData()
+    # operation.deleteData()
+    # operation.insertMultipleData()
+    # operation.printData()
+    # operation.sortData()
+    # operation.limitData()
 
-    operation.mydb.close()
+    # operation.mydb.close()

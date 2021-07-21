@@ -15,6 +15,10 @@ load_dotenv('/home/neo/Programs/MySql_Database/.env')
 
 class Joins:
     def __init__(self):
+        """
+        Describe:
+            function to create connection
+        """
         try:
             self.mydb = mysql.connector.connect(
             host = env['DB_HOST'],
@@ -25,9 +29,26 @@ class Joins:
         except Exception as e:
             Log.logging.error(e)
 
-    def printData(self):
+    def insertData(self):
+        """
+        Describe:
+            function to insert data
+        """
         try:
-            sql = "SELECT * FROM subject_info"
+            sql = "INSERT INTO student (roll_no, student_name, score) VALUES (2, 'Peter', 50)"
+            self.mycursor.execute(sql)
+            self.mydb.commit()
+            Log.logging.info("Data insered successfully")
+        except Exception as e:
+            Log.logging.error(e)
+
+    def printData(self):
+        """
+        Describe:
+            function to print data
+        """
+        try:
+            sql = "SELECT * FROM student"
             self.mycursor.execute(sql)
             myresult = self.mycursor.fetchall()
             for x in myresult:
@@ -36,6 +57,10 @@ class Joins:
             Log.logging.error(e)
 
     def createTable(self):
+        """
+        Describe:
+            function to create table
+        """
         try:
             sql = "CREATE TABLE student_info (roll_no INT, exam_no INT, date_of_birth DATE)"
             self.mycursor.execute(sql)
@@ -43,6 +68,10 @@ class Joins:
             Log.logging.error(e)
 
     def insertMultipleData(self):
+        """
+        Describe:
+            function to insert multiple data
+        """
         try:
             sql = "INSERT INTO student_info (roll_no, exam_no, date_of_birth) VALUES (%s, %s, %s)"
 
@@ -59,6 +88,10 @@ class Joins:
             Log.logging.error(e)
 
     def createSubjectTable(self):
+        """
+        Describe:
+            function to create subject table
+        """
         try:
             sql = "CREATE TABLE subject_info (subject_no INT, subject_name VARCHAR(30))"
             self.mycursor.execute(sql)
@@ -66,6 +99,10 @@ class Joins:
             Log.logging.error(e)
 
     def insertMultipleSubjectData(self):
+        """
+        Describe:
+            function to insert data in subject table
+        """
         try:
             sql = "INSERT INTO subject_info (subject_no, subject_name) VALUES (%s, %s)"
 
@@ -82,6 +119,10 @@ class Joins:
             Log.logging.error(e)
 
     def innerJoin(self):
+        """
+        Describe:
+            function to inner join
+        """
         try:
             sql = "SELECT student_info.exam_no,student_info.date_of_birth,student.student_name FROM student_info INNER JOIN student ON student_info.roll_no=student.roll_no;"
             self.mycursor.execute(sql)
@@ -92,6 +133,10 @@ class Joins:
             Log.logging.error(e)
 
     def leftJoin(self):
+        """
+        Describe:
+            function to left join
+        """
         try:
             sql = "SELECT student_info.exam_no,student_info.date_of_birth,student.student_name FROM student_info LEFT JOIN student ON student_info.roll_no=student.roll_no;"
             self.mycursor.execute(sql)
@@ -103,6 +148,10 @@ class Joins:
 
     
     def rightJoin(self):
+        """
+        Describe:
+            function to right join
+        """
         try:
             sql = "SELECT student_info.exam_no,student_info.date_of_birth,student.student_name FROM student_info RIGHT JOIN student ON student_info.roll_no=student.roll_no;"
             self.mycursor.execute(sql)
@@ -113,6 +162,10 @@ class Joins:
             Log.logging.error(e)
 
     def crossJoin(self):
+        """
+        Describe:
+            function to create cross join
+        """
         try:
             sql = "SELECT * FROM student_info CROSS JOIN subject_info;"
             self.mycursor.execute(sql)
@@ -122,12 +175,33 @@ class Joins:
         except Exception as e:
             Log.logging.error(e)
 
-
+    def createPrimaryKey(self):
+        """
+        Description:
+            function creates primary key
+        """
+        self.mycursor.execute("ALTER TABLE student ADD PRIMARY KEY(roll_no);")
+        self.mycursor.execute("DESCRIBE student;")
+        myresult = self.mycursor.fetchall()
+        for x in myresult:
+            Log.logging.info(x)
     
+    def createForeignKey(self):
+        """
+        Describe:
+            function creates foreign key
+        """
+        self.mycursor.execute("ALTER TABLE student_info ADD CONSTRAINT FOREIGN KEY(roll_no) REFERENCES student(roll_no);")
+        self.mycursor.execute("DESCRIBE student_info;")
+        myresult = self.mycursor.fetchall()
+        for x in myresult:
+            Log.logging.info(x)
+
 if __name__=="__main__":
     join = Joins()
     join.createTable()
     join.insertMultipleData()
+    join.insertData()
     join.printData()
     join.innerJoin()
     join.leftJoin()
@@ -136,3 +210,6 @@ if __name__=="__main__":
     join.insertMultipleSubjectData()
     join.printData()
     join.crossJoin()
+    join.createPrimaryKey()
+    join.createPrimaryKey()
+    join.createForeignKey()
