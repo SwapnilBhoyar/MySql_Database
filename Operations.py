@@ -127,6 +127,36 @@ class Operations:
         except Exception as e:
             Log.logging.error(e)
 
+    
+    def aggregate_functions(self):
+        try:
+            sql = "SELECT SUM(score) FROM student"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            Log.logging.info(myresult)
+
+            sql = "SELECT MAX(score) FROM student"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            Log.logging.info(myresult)
+
+            sql = "SELECT MIN(score) FROM student"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            Log.logging.info(myresult)
+
+            sql = "SELECT AVG(score) FROM student"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            Log.logging.info(myresult)
+
+            sql = "SELECT COUNT(score) FROM student"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            Log.logging.info(myresult)
+        except Exception as e:
+            Log.logging.error(e)
+
 
 if __name__=="__main__":
     operation = Operations()
@@ -142,6 +172,7 @@ if __name__=="__main__":
     # operation.limitData()
     # operation.groupBy()
     # operation.printData()
-    operation.distinctData()
+    # operation.distinctData()
+    operation.aggregate_functions()
 
     operation.mydb.close()
