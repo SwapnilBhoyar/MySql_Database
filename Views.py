@@ -45,6 +45,22 @@ class Views:
         except Exception as e:
             Log.logging.error(e)
 
+    def updateView(self):
+        """
+        Describe:
+            function to update view
+        """
+        try:
+            sql = "ALTER VIEW student_view AS SELECT upper(s.student_name), s.score, i.exam_no, i.date_of_birth FROM student s, student_info i WHERE s.roll_no=i.roll_no;"
+            self.mycursor.execute(sql)
+            sql = "select * from student_view;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
     def deleteView(self):
         """
         Describe:
@@ -59,4 +75,5 @@ class Views:
 if __name__=="__main__":
     view = Views()
     view.createView()
+    view.updateView()
     view.deleteView()
