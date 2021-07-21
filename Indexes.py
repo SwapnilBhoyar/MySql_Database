@@ -41,6 +41,20 @@ class Indexes:
         except Exception as e:
             Log.logging.error(e)
 
+    def useIndex(self):
+        """
+        Describe:
+            function to use index
+        """
+        try:
+            sql = "EXPLAIN SELECT date_of_birth FROM student_info WHERE exam_no=126;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
     def deleteIndex(self):
         """
         Describe:
@@ -57,4 +71,5 @@ if __name__=="__main__":
     index = Indexes()
 
     index.createIndex()
+    index.useIndex()
     index.deleteIndex()
