@@ -72,9 +72,24 @@ class Subqueries:
         except Exception as e:
             Log.logging.error(e)
 
+    def exist_subquery(self):
+        """
+        Describe:
+            function to get student with name 
+        """
+        try:
+            sql = "SELECT student_name FROM student WHERE EXISTS (SELECT score FROM student WHERE score>60);"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     subqueries = Subqueries()
     subqueries.comparision()
     subqueries.in_subquery()
     subqueries.not_in_subquery()
+    subqueries.exist_subquery()
 
