@@ -28,3 +28,22 @@ class Subqueries:
             self.mycursor = self.mydb.cursor()  
         except Exception as e:
             Log.logging.error(e)
+
+    def comparision(self):
+        """
+        Describe:
+            function to get student with min marks
+        """
+        try:
+            sql = "SELECT * FROM student WHERE score = (SELECT MIN(score) FROM student);"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
+if __name__=="__main__":
+    subqueries = Subqueries()
+    subqueries.comparision()
+
