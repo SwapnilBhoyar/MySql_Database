@@ -197,6 +197,20 @@ class Joins:
         for x in myresult:
             Log.logging.info(x)
 
+    def selfJoin(self):
+        """
+        Describe:
+            function to self join
+        """
+        try:
+            sql = "SELECT s.student_name student_name, m.student_name partner FROM student s INNER JOIN student m ON s.roll_no=m.project_partner;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     join = Joins()
     join.createTable()
@@ -213,3 +227,4 @@ if __name__=="__main__":
     join.createPrimaryKey()
     join.createPrimaryKey()
     join.createForeignKey()
+    join.selfJoin()
