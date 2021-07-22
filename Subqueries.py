@@ -43,7 +43,22 @@ class Subqueries:
         except Exception as e:
             Log.logging.error(e)
 
+    def in_subquery(self):
+        """
+        Describe:
+            function to get student with given marks
+        """
+        try:
+            sql = "SELECT * FROM student WHERE score IN (SELECT score FROM student WHERE score=76);"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     subqueries = Subqueries()
     subqueries.comparision()
+    subqueries.in_subquery()
 
