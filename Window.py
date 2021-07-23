@@ -43,7 +43,22 @@ class Window:
         except Exception as e:
             Log.logging.error(e)
 
+    def rank(self):
+        """
+        Describe:
+            function to get student rank
+        """
+        try:
+            sql = "select student_name, rank() over (order by score desc) as rank_number from student;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     window = Window()
-    window.gender_count()
+    # window.gender_count()
+    window.rank()
 
