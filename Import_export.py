@@ -37,11 +37,28 @@ class Import_export:
         """
         try:
             filename = 'data-dump.sql'
-            os.system('mysql -u{} -p{} {} < {}'.format(self.mydb.user, self.mydb._password, self.mydb.database, filename))
+            os.system('mysqldump -u root -p student_record > data-dump.sql')
             Log.logging.info("import successful")
+        except Exception as e:
+            Log.logging.error(e)
+
+    def export_database(self):
+        """
+        Describe:
+            function to export database
+        """
+        try:
+            self.mycursor.execute("CREATE DATABASE temp_db")
+            Log.logging.info("Database Created")
+            os.system('mysql -u root -p temp_db < data-dump.sql')
+            self.mycursor.execute("SHOW DATABASES")
+            result = self.mycursor.fetchall()
+            for x in result:
+                Log.logging.info(x)
         except Exception as e:
             Log.logging.error(e)
 
 if __name__=="__main__":
     import_export = Import_export()
     import_export.import_database()
+    import_export.export_database()
