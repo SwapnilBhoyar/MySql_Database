@@ -43,6 +43,20 @@ class Window:
         except Exception as e:
             Log.logging.error(e)
 
+    def avg_score(self):
+        """
+        Describe:
+            function to get student avg score
+        """
+        try:
+            sql = "select student_name, gender, avg(score) over (partition by gender) as totalgender from student;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
     def rank(self):
         """
         Describe:
@@ -88,6 +102,7 @@ class Window:
 if __name__=="__main__":
     window = Window()
     window.gender_count()
+    window.avg_score()
     window.rank()
     window.lag()
     window.n_tile()
