@@ -1,8 +1,8 @@
 """
 @Author: Swapnil Bhoyar
-@Date: 2021-07-22
+@Date: 2021-07-23
 @Last Modified by: Swapnil Bhoyar
-@Last Modified time: 2021-07-22
+@Last Modified time: 2021-07-23
 @Title : this program contains import export functions.
 """
 
@@ -33,11 +33,10 @@ class Import_export:
     def import_database(self):
         """
         Describe:
-            function to get student gender
+            function to import database
         """
         try:
             filename = 'data-dump.sql'
-            # os.system('mysqldump -u root -p student_record > data-dump.sql')
             os.system('mysql -u{} -p{} {} < {}'.format(self.mydb.user, self.mydb._password, self.mydb.database, filename))
             Log.logging.info("import successful")
         except Exception as e:
