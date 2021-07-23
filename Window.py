@@ -57,8 +57,23 @@ class Window:
         except Exception as e:
             Log.logging.error(e)
 
+    def lag(self):
+        """
+        Describe:
+            function to get student rank
+        """
+        try:
+            sql = "select student_name, lag(score,1) over (order by score desc) as lag_score  from student;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     window = Window()
     # window.gender_count()
-    window.rank()
+    # window.rank()
+    window.lag()
 
