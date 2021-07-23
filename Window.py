@@ -71,9 +71,24 @@ class Window:
         except Exception as e:
             Log.logging.error(e)
 
+    def n_tile(self):
+        """
+        Describe:
+            function to get student in tiles
+        """
+        try:
+            sql = "select student_name, ntile(4) over (order by score desc) as 'row_number'  from student;"
+            self.mycursor.execute(sql)
+            myresult = self.mycursor.fetchall()
+            for x in myresult:
+                Log.logging.info(x)
+        except Exception as e:
+            Log.logging.error(e)
+
 if __name__=="__main__":
     window = Window()
-    # window.gender_count()
-    # window.rank()
+    window.gender_count()
+    window.rank()
     window.lag()
+    window.n_tile()
 
